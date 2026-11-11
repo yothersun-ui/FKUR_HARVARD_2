@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?>
+<style xmlns="http://purl.org/net/xbiblio/csl"
+       version="1.0"
+       class="in-text"
+       default-locale="id-ID">
+  <info>
+    <title>FKUR Harvard Indonesia - Compatible 2026</title>
+    <id>http://www.zotero.org/styles/fkur-harvard-indonesia-compatible-2026</id>
+    <link href="http://www.zotero.org/styles/fkur-harvard-indonesia-compatible-2026" rel="self"/>
+    <author>
+      <name>Custom CSL style</name>
+    </author>
+    <category citation-format="author-date"/>
+    <summary>FKUR Indonesian author-date style; six bibliography authors before et al.</summary>
+    <updated>2026-11-03T00:00:00+00:00</updated>
+  </info>
+
+  <locale xml:lang="id-ID">
+    <terms>
+      <term name="and">dan</term>
+      <term name="et-al">et al.</term>
+      <term name="in">Dalam</term>
+      <term name="page" form="short">
+        <single>hlm.</single>
+        <multiple>hlm.</multiple>
+      </term>
+    </terms>
+  </locale>
+
+  <macro name="author-short">
+    <names variable="author">
+      <name form="short" and="text" delimiter=", " delimiter-precedes-last="never"/>
+      <substitute>
+        <names variable="editor">
+          <name form="short" and="text" delimiter=", " delimiter-precedes-last="never"/>
+        </names>
+        <text variable="title"/>
+      </substitute>
+    </names>
+  </macro>
+
+  <macro name="author-bibliography">
+    <names variable="author">
+      <name name-as-sort-order="all" sort-separator=", " initialize-with="." and="text" delimiter=", " delimiter-precedes-last="never"/>
+      <substitute>
+        <names variable="editor">
+          <name name-as-sort-order="all" sort-separator=", " initialize-with="." and="text" delimiter=", " delimiter-precedes-last="never"/>
+        </names>
+        <text variable="title"/>
+      </substitute>
+    </names>
+  </macro>
+
+  <macro name="issued-year">
+    <date variable="issued">
+      <date-part name="year"/>
+    </date>
+  </macro>
+
+  <macro name="access-date">
+    <group prefix="(diakses " suffix=")">
+      <date variable="accessed">
+        <date-part name="day" suffix=" "/>
+        <date-part name="month" form="long" suffix=" "/>
+        <date-part name="year"/>
+      </date>
+    </group>
+  </macro>
+
+  <citation et-al-min="3" et-al-use-first="1" disambiguate-add-year-suffix="true">
+    <sort>
+      <key macro="author-short"/>
+      <key variable="issued"/>
+    </sort>
+    <layout prefix="(" suffix=")" delimiter="; ">
+      <group delimiter=", ">
+        <text macro="author-short"/>
+        <date variable="issued">
+          <date-part name="year"/>
+        </date>
+      </group>
+    </layout>
+  </citation>
+
+  <bibliography hanging-indent="true" et-al-min="7" et-al-use-first="6" line-spacing="1" entry-spacing="0">
+    <sort>
+      <key macro="author-bibliography"/>
+      <key variable="issued"/>
+      <key variable="title"/>
+    </sort>
+    <layout suffix=".">
+      <choose>
+        <if type="article-journal article-magazine article-newspaper" match="any">
+          <group delimiter=" ">
+            <text macro="author-bibliography"/>
+            <text macro="issued-year" suffix="."/>
+            <text variable="title"/>
+            <group delimiter=", ">
+              <text variable="container-title" font-style="italic"/>
+              <group delimiter=": ">
+                <group>
+                  <text variable="volume"/>
+                  <text variable="issue" prefix="(" suffix=")"/>
+                </group>
+                <text variable="page"/>
+              </group>
+            </group>
+            <text variable="DOI" prefix="https://doi.org/"/>
+            <text variable="URL"/>
+          </group>
+        </if>
+        <else-if type="book" match="any">
+          <group delimiter=" ">
+            <text macro="author-bibliography"/>
+            <text macro="issued-year" suffix="."/>
+            <text variable="title" font-style="italic"/>
+            <text variable="edition" suffix=" ed."/>
+            <group delimiter=": ">
+              <text variable="publisher-place"/>
+              <text variable="publisher"/>
+            </group>
+          </group>
+        </else-if>
+        <else-if type="chapter paper-conference" match="any">
+          <group delimiter=" ">
+            <text macro="author-bibliography"/>
+            <text macro="issued-year" suffix="."/>
+            <text variable="title"/>
+            <group delimiter=", ">
+              <text term="in" text-case="capitalize-first"/>
+              <names variable="editor">
+                <name initialize-with="." and="text" delimiter=", "/>
+                <label form="short" prefix=" (" suffix=")" plural="contextual"/>
+              </names>
+              <text variable="container-title" font-style="italic"/>
+              <text variable="page" prefix="hlm. "/>
+              <text variable="publisher-place"/>
+              <text variable="publisher"/>
+            </group>
+          </group>
+        </else-if>
+        <else>
+          <group delimiter=" ">
+            <text macro="author-bibliography"/>
+            <text macro="issued-year" suffix="."/>
+            <text variable="title"/>
+            <text variable="container-title" font-style="italic"/>
+            <text variable="publisher-place"/>
+            <text variable="publisher"/>
+            <text variable="URL"/>
+            <text macro="access-date"/>
+          </group>
+        </else>
+      </choose>
+    </layout>
+  </bibliography>
+</style>
